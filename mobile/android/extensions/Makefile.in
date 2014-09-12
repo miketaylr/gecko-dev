@@ -22,6 +22,5 @@ libs:: $(SHUMWAY_BROWSER_EXTENSION) $(GLOBAL_DEPS)
 
 libs:: $(FINAL_TARGET)/chrome/shumway.manifest
 	$(call py_action,buildlist,$(FINAL_TARGET)/chrome.manifest "manifest chrome/shumway.manifest")
+
 endif
-
-
