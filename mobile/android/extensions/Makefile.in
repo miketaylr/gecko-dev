@@ -5,6 +5,8 @@
 include $(topsrcdir)/config/rules.mk
 
 SHUMWAY_BROWSER_EXTENSION = $(topsrcdir)/browser/extensions/shumway
+WEBCOMPAT_REPORTER_ADDON = $(topsrcdir)/mobile/android/extensions/webcompat-reporter
+WEBCOMPAT_XPI = mobile-reporter@webcompat.com.xpi
 
 exclude_files = \
   test \
@@ -22,6 +24,14 @@ libs:: $(SHUMWAY_BROWSER_EXTENSION) $(GLOBAL_DEPS)
 
 libs:: $(FINAL_TARGET)/chrome/shumway.manifest
 	$(call py_action,buildlist,$(FINAL_TARGET)/chrome.manifest "manifest chrome/shumway.manifest")
+
+$(FINAL_TARGET)/extensions/$(WEBCOMPAT_XPI): $(GLOBAL_DEPS)
+	@(cd $(WEBCOMPAT_REPORTER_ADDON) && \
+    $(ZIP) -r $(WEBCOMPAT_XPI) $(WEBCOMPAT_REPORTER_ADDON))
+
+libs:: $(FINAL_TARGET)/extensions/$(WEBCOMPAT_XPI)
+	$(PYTHON) $(topsrcdir)/config/nsinstall.py \
+    $(WEBCOMPAT_REPORTER_ADDON)/$(WEBCOMPAT_XPI) $(FINAL_TARGET)/extensions
+	@(cd $(WEBCOMPAT_REPORTER_ADDON) && rm $(WEBCOMPAT_XPI))
+
 endif
-
-
