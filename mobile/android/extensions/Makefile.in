@@ -5,6 +5,8 @@
 include $(topsrcdir)/config/rules.mk
 
 SHUMWAY_BROWSER_EXTENSION = $(topsrcdir)/browser/extensions/shumway
+WEBCOMPAT_REPORTER_ADDON = $(topsrcdir)/mobile/android/extensions/webcompat-reporter
+WEBCOMPAT_XPI = webcompat-reporter.xpi
 
 exclude_files = \
   test \
@@ -22,6 +24,11 @@ libs:: $(SHUMWAY_BROWSER_EXTENSION) $(GLOBAL_DEPS)
 
 libs:: $(FINAL_TARGET)/chrome/shumway.manifest
 	$(call py_action,buildlist,$(FINAL_TARGET)/chrome.manifest "manifest chrome/shumway.manifest")
+
+$(FINAL_TARGET)/extensions/webcompat-reporter.xpi: $(GLOBAL_DEPS)
+	@(cd $(WEBCOMPAT_REPORTER_ADDON) && \
+        $(ZIP) -r $(WEBCOMPAT_XPI) bootstrap.js \
+                                install.rdf \
+                                icon.png && \
+        mv $(WEBCOMPAT_XPI) $(FINAL_TARGET)/extensions)
 endif
-
-
