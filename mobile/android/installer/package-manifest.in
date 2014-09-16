@@ -630,5 +630,6 @@ bin/components/@DLL_PREFIX@nkgnomevfs@DLL_SUFFIX@
 @BINPATH@/components/DataStore.manifest
 @BINPATH@/components/DataStoreImpl.js
 @BINPATH@/components/dom_datastore.xpt
-
-@BINPATH/extensions/mobile-reporter@webcompat.com.xpi
+#ifdef NIGHTLY_BUILD
+@BINPATH@/extensions/mobile-reporter@webcompat.com.xpi
+#endif
