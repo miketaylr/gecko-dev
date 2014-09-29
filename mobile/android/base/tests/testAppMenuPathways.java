@@ -19,6 +19,7 @@ public class testAppMenuPathways extends UITest {
         GeckoHelper.blockForReady();
 
         _testSaveAsPDFPathway();
+        _testWebcompatReporterPathway();
     }
 
     public void _testSaveAsPDFPathway() {
@@ -54,5 +55,18 @@ public class testAppMenuPathways extends UITest {
         // The following call doesn't wait for the resulting pdf but checks that no exception are thrown.
         // NOTE: save as pdf functionality must be done at the end as it is slow and cause other test operations to fail.
         mAppMenu.pressMenuItem(AppMenuComponent.PageMenuItem.SAVE_AS_PDF);
+    }
+
+    public void _testWebcompatReporterPathway() {
+        // Test that the menu item is disabled in about:home.
+        NavigationHelper.enterAndLoadUrl(StringHelper.ABOUT_HOME_URL);
+        mAppMenu.assertWebcompatReporterMenuItemIsDisabled(StringHelper.WEBCOMPAT_REPORTER_LABEL);
+
+        // Test that the menu item is enabled for a real webpage.
+        NavigationHelper.enterAndLoadUrl(StringHelper.ROBOCOP_BLANK_PAGE_01_URL);
+        mAppMenu.assertWebcompatReporterMenuItemIsEnabled(StringHelper.WEBCOMPAT_REPORTER_LABEL);
+
+        // If we wanted to test that we actually ended up in the right place.
+        //getSolo().clickOnMenuItem(StringHelper.WEBCOMPAT_REPORTER_LABEL);
     }
 }

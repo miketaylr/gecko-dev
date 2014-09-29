@@ -133,6 +133,29 @@ public class AppMenuComponent extends BaseComponent {
         mSolo.goBack();
     }
 
+
+    public void assertReportSiteIssueMenuItemIsDisabled(String text) {
+        openAppMenu();
+
+        final View webcompatReporterItemView = findAppMenuItemView(text);
+        fAssertFalse("The Report Site Issue menu item is not enabled", webcompatReporterItemView.isEnabled());
+        fAssertEquals("The Report Site Issue menu item is visible", View.VISIBLE, webcompatReporterItemView.getVisibility());
+
+        // Close the App Menu.
+        mSolo.goBack();
+    }
+
+    public void assertReportSiteIssueMenuItemIsEnabled(String text) {
+        openAppMenu();
+
+        final View webcompatReporterItemView = findAppMenuItemView(text);
+        fAssertTrue("The Report Site Issue menu item is enabled", webcompatReporterItemView.isEnabled());
+        fAssertEquals("The Report Site Issue menu item is visible", View.VISIBLE, webcompatReporterItemView.getVisibility());
+
+        // Close the App Menu.
+        mSolo.goBack();
+    }
+
     private View getOverflowMenuButtonView() {
         return mSolo.getView(R.id.menu);
     }
