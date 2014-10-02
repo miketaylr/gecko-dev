@@ -72,6 +72,11 @@
           android:visible="false"
           android:title="@string/exit_guest_session"/>
 
+#ifdef NIGHTLY_BUILD
+    <item android:id="@+id/webcompat_icon"
+          android:icon="@drawable/ic_menu_webcompat"/>
+#endif
+
     <!-- Android will eliminate v11+ resource files from pre-11 builds.
          Those files are the only place in which certain IDs are defined.
          This causes compilation errors.
